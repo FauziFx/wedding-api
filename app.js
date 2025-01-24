@@ -7,9 +7,10 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
 const ErrorHandlers = require("./middlewares/ErrorHandler.js");
+const Authenticate = require("./middlewares/Authenticate.js");
 const users = require("./routes/users.routes");
 const auth = require("./routes/auth.routes");
-const Authenticate = require("./middlewares/Authenticate.js");
+const guestbook = require("./routes/guestbook.routes");
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.get("/", (req, res) => {
 app.use("/v1/auth", auth);
 app.use(Authenticate);
 app.use("/v1/users", users);
+app.use("/v1/guestbook", guestbook);
 
 app.use(ErrorHandlers);
 
