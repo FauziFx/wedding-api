@@ -11,6 +11,7 @@ const Authenticate = require("./middlewares/Authenticate.js");
 const users = require("./routes/users.routes");
 const auth = require("./routes/auth.routes");
 const guestbook = require("./routes/guestbook.routes");
+const bankaccount = require("./routes/bankaccount.routes");
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use("/v1/auth", auth);
 app.use(Authenticate);
 app.use("/v1/users", users);
 app.use("/v1/guestbook", guestbook);
+app.use("/v1/bankaccount", bankaccount);
 
 app.use(ErrorHandlers);
 
