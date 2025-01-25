@@ -17,52 +17,46 @@ let self = {};
 self.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    if (!(email && password)) {
-      return res
-        .status(400)
-        .json({ success: false, message: "All input is required!" });
-    } else {
-      const dataUser = await user.findOne({
-        where: {
-          email: email,
-        },
+    const dataUser = await user.findOne({
+      where: {
+        email: email,
+      },
+    });
+    if (!dataUser) {
+      res.json({
+        success: false,
+        message: "Email not registered",
       });
-      if (!dataUser) {
-        res.json({
+    } else {
+      // Validate password
+      const matchPassword = await bcrypt.compare(password, dataUser.password);
+      if (!matchPassword) {
+        return res.json({
           success: false,
-          message: "Email not registered",
-        });
-      } else {
-        // Validate password
-        const matchPassword = await bcrypt.compare(password, dataUser.password);
-        if (!matchPassword) {
-          return res.json({
-            success: false,
-            message: "Wrong password!",
-          });
-        }
-
-        //creating a access token
-        const token = jwt.sign(
-          {
-            id: dataUser.id,
-            name: dataUser.name,
-            email: dataUser.email,
-          },
-          process.env.TOKEN_SECRET,
-          {
-            expiresIn: "2d",
-          }
-        );
-
-        res.status(200).json({
-          success: true,
-          message: "User logged in successfully",
-          data: {
-            token: token,
-          },
+          message: "Wrong password!",
         });
       }
+
+      //creating a access token
+      const token = jwt.sign(
+        {
+          id: dataUser.id,
+          name: dataUser.name,
+          email: dataUser.email,
+        },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: "2d",
+        }
+      );
+
+      res.status(200).json({
+        success: true,
+        message: "User logged in successfully",
+        data: {
+          token: token,
+        },
+      });
     }
   } catch (error) {
     next(error);

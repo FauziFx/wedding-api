@@ -8,6 +8,9 @@ const dotenv = require("dotenv");
 dotenv.config();
 const ErrorHandlers = require("./middlewares/ErrorHandler.js");
 const Authenticate = require("./middlewares/Authenticate.js");
+const CheckInputs = require("./middlewares/CheckInputs.js");
+
+// Router
 const users = require("./routes/users.routes");
 const auth = require("./routes/auth.routes");
 const guestbook = require("./routes/guestbook.routes");
@@ -24,14 +27,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to vinayak's application." });
+  res.json({ message: "Welcome to application." });
 });
 
-app.use("/v1/auth", auth);
+app.use("/v1/auth", CheckInputs, auth);
 app.use(Authenticate);
-app.use("/v1/users", users);
-app.use("/v1/guestbook", guestbook);
-app.use("/v1/bankaccount", bankaccount);
+app.use("/v1/users", CheckInputs, users);
+app.use("/v1/guestbook", CheckInputs, guestbook);
+app.use("/v1/bankaccount", CheckInputs, bankaccount);
 
 app.use(ErrorHandlers);
 

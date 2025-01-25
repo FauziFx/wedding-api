@@ -33,22 +33,16 @@ self.getAll = async (req, res, next) => {
 self.createGuest = async (req, res, next) => {
   try {
     const { name, whatsapp, userId } = req.body;
-    if (!(name && whatsapp && userId)) {
-      return res
-        .status(400)
-        .json({ success: false, message: "All input is required!" });
-    } else {
-      const response = await guestbook.create({
-        name: name,
-        whatsapp: whatsapp,
-        userId: userId,
-      });
-      res.status(201).json({
-        success: true,
-        message: "Create guest successfully",
-        data: response,
-      });
-    }
+    const response = await guestbook.create({
+      name: name,
+      whatsapp: whatsapp,
+      userId: userId,
+    });
+    res.status(201).json({
+      success: true,
+      message: "Create guest successfully",
+      data: response,
+    });
   } catch (error) {
     next(error);
   }

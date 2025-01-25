@@ -33,23 +33,17 @@ self.getAll = async (req, res, next) => {
 self.createBankaccount = async (req, res, next) => {
   try {
     const { name, bank, number, userId } = req.body;
-    if (!(name && bank && number && userId)) {
-      return res
-        .status(400)
-        .json({ success: false, message: "All input is required!" });
-    } else {
-      const response = await bankaccount.create({
-        name: name,
-        bank: bank,
-        number: number,
-        userId: userId,
-      });
-      res.status(201).json({
-        success: true,
-        message: "Create bank account successfully",
-        data: response,
-      });
-    }
+    const response = await bankaccount.create({
+      name: name,
+      bank: bank,
+      number: number,
+      userId: userId,
+    });
+    res.status(201).json({
+      success: true,
+      message: "Create bank account successfully",
+      data: response,
+    });
   } catch (error) {
     next(error);
   }

@@ -16,39 +16,30 @@ self.changePassword = async (req, res, next) => {
   try {
     const { oldPassword, newPassword } = req.body;
     const { id } = req.params;
-    if (!(oldPassword && newPassword)) {
-      return res
-        .status(400)
-        .json({ success: false, message: "All input is required!" });
-    } else {
-      const dataUser = await user.findOne({
+    const dataUser = await user.findOne({
+      where: {
+        id: id,
+      },
+    });
+    // Validate password
+    const matchPassword = await bcrypt.compare(oldPassword, dataUser.password);
+    if (!matchPassword) {
+      res.json({
+        success: false,
+        message: "Old Password doesn't match",
+      });
+      return;
+    }
+    const hashPassword = bcrypt.hashSync(newPassword, 10);
+
+    await user.update(
+      { password: hashPassword },
+      {
         where: {
           id: id,
         },
-      });
-      // Validate password
-      const matchPassword = await bcrypt.compare(
-        oldPassword,
-        dataUser.password
-      );
-      if (!matchPassword) {
-        res.json({
-          success: false,
-          message: "Old Password doesn't match",
-        });
-        return;
       }
-      const hashPassword = bcrypt.hashSync(newPassword, 10);
-
-      await user.update(
-        { password: hashPassword },
-        {
-          where: {
-            id: id,
-          },
-        }
-      );
-    }
+    );
     res.status(201).json({
       success: true,
       message: "Change password successfully",
