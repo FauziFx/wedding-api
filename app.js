@@ -17,7 +17,6 @@ const auth = require("./routes/auth.routes");
 const guestbook = require("./routes/guestbook.routes");
 const bankaccount = require("./routes/bankaccount.routes");
 const general = require("./routes/general.routes");
-const { uploadImages, uploadMusic } = require("./middlewares/Upload.js");
 
 var app = express();
 
