@@ -62,3 +62,7 @@ typings/
 
 # test
 *.rest
+
+# Uploaded file
+uploads/images/*
+uploads/music/*
