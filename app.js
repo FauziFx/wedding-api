@@ -18,6 +18,7 @@ const guestbook = require("./routes/guestbook.routes");
 const bankaccount = require("./routes/bankaccount.routes");
 const general = require("./routes/general.routes");
 const person = require("./routes/person.routes");
+const gallery = require("./routes/gallery.routes");
 
 var app = express();
 
@@ -54,6 +55,7 @@ app.use("/v1/guestbook", CheckInputs, guestbook);
 app.use("/v1/bankaccount", CheckInputs, bankaccount);
 app.use("/v1/general", CheckInputs, general);
 app.use("/v1/person", CheckInputs, person);
+app.use("/v1/gallery", gallery);
 
 app.use(ErrorHandlers);
 

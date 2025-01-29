@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
         as: "person",
         foreignKey: "userId",
       });
+      user.hasMany(models.gallery, {
+        as: "gallery",
+        foreignKey: "userId",
+      });
     }
   }
   user.init(
