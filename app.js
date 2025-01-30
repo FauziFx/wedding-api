@@ -20,6 +20,11 @@ const general = require("./routes/general.routes");
 const person = require("./routes/person.routes");
 const gallery = require("./routes/gallery.routes");
 
+const generalConstroller = require("./controllers/general.controller.js");
+const personConstroller = require("./controllers/person.controller.js");
+const galleryConstroller = require("./controllers/gallery.controller.js");
+const bankaccountConstroller = require("./controllers/bankaccount.controller.js");
+
 var app = express();
 
 app.use(logger("dev"));
@@ -47,6 +52,12 @@ app.get("/v1/music/:musicName", (req, res) => {
   const readStream = fs.createReadStream(`uploads/music/${musicName}`);
   readStream.pipe(res);
 });
+
+// Get All
+app.get("/v1/general", generalConstroller.getAll);
+app.get("/v1/person", personConstroller.getAll);
+app.get("/v1/gallery", galleryConstroller.getAll);
+app.get("/v1/bankaccount", bankaccountConstroller.getAll);
 
 app.use("/v1/auth", CheckInputs, auth);
 app.use(Authenticate);
