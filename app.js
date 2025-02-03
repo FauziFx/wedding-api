@@ -19,6 +19,7 @@ const bankaccount = require("./routes/bankaccount.routes");
 const general = require("./routes/general.routes");
 const person = require("./routes/person.routes");
 const gallery = require("./routes/gallery.routes");
+const comment = require("./routes/comment.routes");
 
 const generalConstroller = require("./controllers/general.controller.js");
 const personConstroller = require("./controllers/person.controller.js");
@@ -58,6 +59,8 @@ app.get("/v1/general", generalConstroller.getAll);
 app.get("/v1/person", personConstroller.getAll);
 app.get("/v1/gallery", galleryConstroller.getAll);
 app.get("/v1/bankaccount", bankaccountConstroller.getAll);
+
+app.use("/v1/comment", comment);
 
 app.use("/v1/auth", CheckInputs, auth);
 app.use(Authenticate);
