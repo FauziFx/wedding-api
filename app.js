@@ -20,6 +20,7 @@ const general = require("./routes/general.routes");
 const person = require("./routes/person.routes");
 const gallery = require("./routes/gallery.routes");
 const comment = require("./routes/comment.routes");
+const dashboard = require("./routes/dashboard.routes");
 
 const generalConstroller = require("./controllers/general.controller.js");
 const personConstroller = require("./controllers/person.controller.js");
@@ -70,7 +71,7 @@ app.use("/v1/bankaccount", CheckInputs, bankaccount);
 app.use("/v1/general", CheckInputs, general);
 app.use("/v1/person", CheckInputs, person);
 app.use("/v1/gallery", gallery);
-
+app.use("/v1/dashboard", dashboard);
 app.use(ErrorHandlers);
 
 app.listen(process.env.APP_PORT, () => {
